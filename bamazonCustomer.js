@@ -37,7 +37,6 @@ function checkQuantity(selectedID, userQuantity) {
             console.log("Product not found. Please make sure you enter correct ID.");
             listProducts();
         } else {
-            console.log("testing");
             var storeQuantity = res[0].quantity;
             var storePrice = res[0].price;
 
@@ -45,7 +44,7 @@ function checkQuantity(selectedID, userQuantity) {
                 console.log("Insufficient Quantity!");
             } else {
                 var userTotalPrice = storePrice * userQuantity;
-                console.log("Your total amount is: " + userTotalPrice);
+                console.log("Your total amount is $" + userTotalPrice);
                 updateStoreQuantity(selectedID, userQuantity, userTotalPrice);
             }
         }
