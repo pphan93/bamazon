@@ -10,6 +10,7 @@ CREATE TABLE products (
   department_name VARCHAR(100) NULL,
   price DECIMAL(10,2) NULL,
   quantity INT NULL,
+  product_sales DECIMAL(10,2) NOT NULL DEFAULT 0,
   PRIMARY KEY (item_id)
 );
 
@@ -42,6 +43,18 @@ VALUES ('Hanes Mens EcoSmart Fleece Sweatshirt', 'Clothing', 9.99,11);
 
 INSERT INTO products (product_name, department_name, price,quantity)
 VALUES ('Haggar Mens Travel Stretch Tailored Fit 2Button Side Vent Solid Blazer', 'Clothing', 105.75,4);
+
+CREATE TABLE departments (
+  department_id INT NOT NULL AUTO_INCREMENT,
+  department_name VARCHAR(255) NULL,
+  over_head_costs FLOAT ,
+  PRIMARY KEY (department_id)
+);
+
+ALTER TABLE departments
+ADD UNIQUE (department_name);
+
+INSERT INTO departments (department_name, over_head_costs) values ('Electronic',20000),('Video Games',10000),('Furniture',5000),('Sports & Outdoors',5000),('Clothing',1000);
 
 
 -- ### Alternative way to insert more than one row

@@ -7,7 +7,20 @@ var connection = mysql.createConnection(config);
 
 connection.connect(function (err) {
     if (err) throw err;
-    console.log("connected as id " + connection.threadId + "\n");
 });
 
+
 module.exports = connection;
+module.exports.runQuery= function (query,inputvalue, callback) {
+    return connection.query(query,inputvalue, function (err, res) {
+        if (err) throw err;
+        var object = {};
+        //console.table(res);
+        for (var i = 0; i < res.length; i++) {
+            var id = res[i].id;
+            delete res[i].id;
+           object[id] = res[i];
+        }
+
+        return callback(object);
+    });};
