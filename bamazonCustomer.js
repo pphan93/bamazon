@@ -1,8 +1,5 @@
 var connection = require("./connector.js");
 var inquirer = require("inquirer");
-//console.log(connection);
-
-//listProducts();
 
 function listProducts() {
     connection.runQuery("SELECT item_id as id,product_name,price FROM products", "", function (result) {
@@ -36,7 +33,6 @@ function checkQuantity(selectedID, userQuantity) {
     userQuantity = parseInt(userQuantity);
     connection.query("SELECT price,quantity FROM products where item_id = ?", [selectedID], function (err, res) {
         if (err) throw err;
-        //console.log(res.length);
 
         if (res === undefined || res.length == 0) {
             console.log("_______________________________");

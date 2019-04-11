@@ -15,7 +15,6 @@ module.exports.runQuery= function (query,inputvalue, callback) {
     return connection.query(query,inputvalue, function (err, res) {
         if (err) throw err;
         var object = {};
-        //console.table(res);
         for (var i = 0; i < res.length; i++) {
             var id = res[i].id;
             delete res[i].id;

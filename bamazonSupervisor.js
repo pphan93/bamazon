@@ -33,16 +33,7 @@ function showOptions() {
 //showOptions();
 
 function viewProductSalesbyDepartment() {
-    connection.runQuery("SELECT lpad(d.department_id,2,0) as id ,d.department_name,d.over_head_costs,ifnull(sum(p.product_sales),0) product_sales,ifnull(sum(p.product_sales),0) - d.over_head_costs as total_profit FROM departments d LEFT JOIN products p ON d.department_name = p.department_name group by department_id,department_name,over_head_costs;", "", function (res) {
-        var result = {};
-        for (var i = 0; i < res.length; i++) {
-            result[res[i].department_id] = {
-                Department_name: res[i].department_name,
-                Over_Head_Costs: res[i].over_head_costs,
-                Product_Sales: res[i].product_sales,
-                Total_Profit: res[i].total_profit
-            };
-        }
+    connection.runQuery("SELECT d.department_id as id ,d.department_name,d.over_head_costs,ifnull(sum(p.product_sales),0) product_sales,ifnull(sum(p.product_sales),0) - d.over_head_costs as total_profit FROM departments d LEFT JOIN products p ON d.department_name = p.department_name group by department_id,department_name,over_head_costs;", "", function (res) {
         console.table(res);
         showOptions();
     });
@@ -74,7 +65,7 @@ function createNewDepartment() {
                         throw err;
                     }
                 } else {
-                    console.log(res);
+                    console.log("Department " + input.department_name + "has been added");
 
                 }
                 showOptions();
