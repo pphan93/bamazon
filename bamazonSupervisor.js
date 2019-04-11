@@ -61,19 +61,26 @@ function createNewDepartment() {
         }
 
     ]).then(function (input) {
-        connection.query("INSERT INTO departments (department_name, over_head_costs) values (?,?)", [input.department_name, input.over_head_costs], function (err, res) {
-            if (err) {
-                if (err.code == 'ER_DUP_ENTRY' || err.errno == 1062) {
-                    console.log('Error: Department is already exist');
-                } else {
-                    throw err;
-                }
-            } else {
-                console.log(res);
-                
-            }
+
+        if ((isNaN(input.over_head_costs)) || (input.department_name == "" || input.over_head_costs == "")) {
+            console.log("****************ENTER VALID INPUT**********");
             showOptions();
-        });
+        } else {
+            connection.query("INSERT INTO departments (department_name, over_head_costs) values (?,?)", [input.department_name, input.over_head_costs], function (err, res) {
+                if (err) {
+                    if (err.code == 'ER_DUP_ENTRY' || err.errno == 1062) {
+                        console.log('Error: Department is already exist');
+                    } else {
+                        throw err;
+                    }
+                } else {
+                    console.log(res);
+
+                }
+                showOptions();
+            });
+        }
+
     });
 }
 

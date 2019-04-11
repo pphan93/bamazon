@@ -73,12 +73,19 @@ function addToInventory() {
             }
 
         ]).then(function (input) {
-            quantityToADD = parseInt(input.quantityToADD);
-            connection.runQuery("UPDATE products SET quantity = quantity +" + quantityToADD + " WHERE item_id = " + input.productIDToADD, "", function (result) {
-                console.log("Updated quantity " + quantityToADD + " for item ID " + input.productIDToADD);
-                console.log("__________________________________");
-                showOptions();
-            });
+
+            if ((isNaN(input.productIDToADD) || isNaN(input.quantityToADD)) || (input.productIDToADD == "" || input.quantityToADD == "")) {
+                console.log("****************ENTER VALID INPUT**********");
+                addToInventory();
+            } else {
+                quantityToADD = parseInt(input.quantityToADD);
+                connection.runQuery("UPDATE products SET quantity = quantity +" + quantityToADD + " WHERE item_id = " + input.productIDToADD, "", function (result) {
+                    console.log("Updated quantity " + quantityToADD + " for item ID " + input.productIDToADD);
+                    console.log("__________________________________");
+                    showOptions();
+                });
+            }
+
         });
     });
 }
@@ -106,11 +113,19 @@ function addNewProduct(departmentName) {
         }
 
     ]).then(function (input) {
-        connection.runQuery("INSERT INTO products (product_name, department_name, price,quantity) VALUES (?,?,?,?)", [input.product_name, input.department_name, input.price, input.quantity], function (res) {
-            console.log("Product have been added into the store");
-            console.log("__________________________________");
-            showOptions();
-        });
+
+        if ((isNaN(input.price) || isNaN(input.quantity)) || (input.product_name == "" || input.price == "" || input.quantity == "")) {
+            console.log("****************ENTER VALID INPUT**********");
+            runAddNewProduct();
+        } else {
+            connection.runQuery("INSERT INTO products (product_name, department_name, price,quantity) VALUES (?,?,?,?)", [input.product_name, input.department_name, input.price, input.quantity], function (res) {
+                console.log("Product have been added into the store");
+                console.log("__________________________________");
+                showOptions();
+            });
+        }
+
+
     });
 
 }

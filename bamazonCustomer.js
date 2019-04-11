@@ -21,7 +21,13 @@ function showOptions() {
         }
 
     ]).then(function (user) {
-        checkQuantity(user.selectedID, user.userQuantity);
+        if ((isNaN(user.selectedID) || isNaN(user.userQuantity)) || (user.selectedID == "" || user.userQuantity == "")) {
+            console.log("****************ENTER VALID INPUT**********");
+            showOptions();
+        } else {
+            checkQuantity(user.selectedID, user.userQuantity);
+        }
+
     });
 }
 
@@ -42,6 +48,7 @@ function checkQuantity(selectedID, userQuantity) {
 
             if (userQuantity > storeQuantity) {
                 console.log("Insufficient Quantity!");
+                showOptions();
             } else {
                 var userTotalPrice = storePrice * userQuantity;
                 console.log("Your total amount is $" + userTotalPrice);
