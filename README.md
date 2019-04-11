@@ -4,7 +4,10 @@
 
 This is an Amazon-like storefront using MySQL as database. The app will take in orders from customers and deplete stock from the store's inventory. The program keep track product sales across the store's departments and then provide a summary of the highest-grossing departments in the store.
 
-Require the MySQL and Inquirer npm packages for data input and storage.
+Require the `MySQL` and `Inquirer` npm packages for data input and storage.
+
+## Instruction
+Run `node bamazonMain.js`
 
 ### Challenge #1: Customer View
 
@@ -23,6 +26,22 @@ Require the MySQL and Inquirer npm packages for data input and storage.
    * price (cost to customer)
 
    * stock_quantity (how much of the product is available in stores)
+   
+ ```sql
+CREATE DATABASE bamazon;
+
+USE bamazon;
+
+CREATE TABLE products (
+  item_id INT NOT NULL AUTO_INCREMENT,
+  product_name VARCHAR(255) NULL,
+  department_name VARCHAR(100) NULL,
+  price DECIMAL(10,2) NULL,
+  quantity INT NULL,
+  product_sales DECIMAL(10,2) NOT NULL DEFAULT 0,
+  PRIMARY KEY (item_id)
+);
+ ```
 
 4. Populate this database with around 10 different products. (i.e. Insert "mock" data rows into this database and table).
 
@@ -40,6 +59,8 @@ Require the MySQL and Inquirer npm packages for data input and storage.
 8. However, if your store _does_ have enough of the product, you should fulfill the customer's order.
    * This means updating the SQL database to reflect the remaining quantity.
    * Once the update goes through, show the customer the total cost of their purchase.
+
+![](/gif/bamazonCustomer.gif)
 
 - - -
 
@@ -65,6 +86,8 @@ Require the MySQL and Inquirer npm packages for data input and storage.
 
   * If a manager selects `Add New Product`, it should allow the manager to add a completely new product to the store.
 
+![](/gif/bamazonManager.gif)
+
 - - -
 
 ### Challenge #3: Supervisor View
@@ -76,6 +99,19 @@ Require the MySQL and Inquirer npm packages for data input and storage.
    * department_name
 
    * over_head_costs (A dummy number you set for each department)
+
+```sql
+CREATE TABLE departments (
+  department_id INT NOT NULL AUTO_INCREMENT,
+  department_name VARCHAR(255) NULL,
+  over_head_costs FLOAT ,
+  PRIMARY KEY (department_id)
+);
+
+--Only unique department name can be added
+ALTER TABLE departments
+ADD UNIQUE (department_name);
+```
 
 2. Modify the products table so that there's a product_sales column, and modify your `bamazonCustomer.js` app so that when a customer purchases anything from the store, the price of the product multiplied by the quantity purchased is added to the product's product_sales column.
 
@@ -95,3 +131,5 @@ Require the MySQL and Inquirer npm packages for data input and storage.
 | 02            | Clothing        | 60000           | 100000        | 40000        |
 
 5. The `total_profit` column should be calculated on the fly using the difference between `over_head_costs` and `product_sales`. `total_profit` should not be stored in any database. You should use a custom alias.
+
+![](/gif/bamazonSupervisor.gif)
